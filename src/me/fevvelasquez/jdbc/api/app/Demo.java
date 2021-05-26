@@ -1,8 +1,17 @@
 /**
- * fevvelasquez 2021, coding exercises about Java JDBC API Basis.
+ * ----------------------------
+ * Java JDBC API basis, coding exercises.
+ * Exploring java.sql.DriverManager , java.sql.Connection , java.sql.Statement , java.sql.ResultSet features.
+ * ----------------------------
  * 
- * Connect from Java to MySQL database, then execute free DQL and DML Statement(s).
- * Uses: JDBC API, MySQL, SQL / Javadoc, Logger, ResourceBundle.
+ * fevvelasquez writes the StatementExecutor own class as a factory of 
+ * database connected, ready to use, automated Statement instances. 
+ * 
+ * So, you can execute any valid SQL statement directly and see the results into a StatementResult instance.
+ * 
+ * 
+ * 
+ * Even if MySql is used for the demo, a distinct RDBMS or distinct database can be used.
  */
 package me.fevvelasquez.jdbc.api.app;
 
@@ -14,13 +23,13 @@ import me.fevvelasquez.jdbc.api.statement.StatementExecutor;
 import me.fevvelasquez.jdbc.api.statement.StatementResult;
 
 /**
- * {@link StatementExecutor}, examples of use.
+ * {@link StatementExecutor} Demo, examples of use.
  * 
- * @version 0.2.0. Exercise, exploring 'execute' method from java.sql.Statement.
+ * @version 0.2.0. Demo version.
  * @author fevvelasquez@gmail.com
  */
-public class Example {
-	private static final Logger logger = Logger.getLogger(Example.class.getName());
+public class Demo {
+	private static final Logger logger = Logger.getLogger(Demo.class.getName());
 
 	/**
 	 * Main method.
@@ -31,7 +40,7 @@ public class Example {
 
 		try {
 			// Get Executor connected to the database.
-			ResourceBundle db = ResourceBundle.getBundle(Example.class.getPackageName() + ".db");
+			ResourceBundle db = ResourceBundle.getBundle(Demo.class.getPackageName() + ".db");
 			StatementExecutor se = StatementExecutor.getInstance(db.getString("url"), db.getString("username"),
 					db.getString("password"));
 			// ------------------------------------------------------------------------------------
