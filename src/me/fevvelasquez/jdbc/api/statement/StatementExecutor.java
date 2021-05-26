@@ -1,21 +1,26 @@
 /**
  * fevvelasquez 2021, coding exercises about Java JDBC API Basis.
+ * 
+ * Connect from Java to MySQL database, then execute free DQL and DML Statement(s).
+ * Uses: JDBC API, MySQL, SQL / Javadoc, Logger, ResourceBundle.
  */
-package me.fevvelasquez.jdbc.api.basis;
+package me.fevvelasquez.jdbc.api.statement;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
  * Executor of multiple Statement instances within a single database connection.
  * 
- * @version 0.1.
+ * @version 0.2.0. Exercise, exploring 'execute' method from java.sql.Statement.
  * @author fevvelasquez@gmail.com
  */
 public class StatementExecutor {
+	private static final Logger logger = Logger.getLogger(StatementExecutor.class.getName());
 	private final Connection connection;
 
 	private StatementExecutor(String url, String username, String password) throws SQLException {
@@ -39,7 +44,7 @@ public class StatementExecutor {
 		try {
 			return new StatementExecutor(url, username, password);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.severe(e.getMessage());
 		}
 		return null;
 	}
@@ -67,7 +72,7 @@ public class StatementExecutor {
 			rowsAffected = isQuery ? 0 : statement.getUpdateCount();
 			return new StatementResult(statement, isQuery, resultset, rowsAffected);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.severe(e.getMessage());
 		}
 		return null;
 
@@ -76,9 +81,13 @@ public class StatementExecutor {
 	/**
 	 * Release Connection resources.
 	 */
-	public void close() throws SQLException {
-		connection.close();
-		System.out.println("Connection closed.");
+	public void close() {
+		try {
+			connection.close();
+			logger.info("Connection closed.");
+		} catch (SQLException e) {
+			logger.warning(e.getMessage());
+		}
 	}
 
 }
